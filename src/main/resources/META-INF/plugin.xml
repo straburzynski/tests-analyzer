@@ -1,0 +1,82 @@
+<idea-plugin url="https://github.com/straburzynski/tests-analyzer">
+    <id>com.github.straburzynski.testsanalyzer</id>
+    <name>Tests Analyzer</name>
+    <version>@plugin.version@</version>
+    <vendor url="https://github.com/straburzynski" email="sebastian@straburzynski@pl">Sebastian Straburzyński</vendor>
+
+    <description><![CDATA[
+    <p>Runs tests and visualizes their execution timeline to identify parallelism issues and slow tests.</p>
+
+    <h3>Main features</h3>
+    <ul>
+        <li><b>Gantt Chart</b> — timeline showing each test as a horizontal bar, making it obvious which tests run in parallel and which are sequential bottlenecks.</li>
+        <li><b>Results Table</b> — sortable, filterable table with class name, test name, duration and color-coded status.</li>
+        <li><b>HTML Export</b> — self-contained HTML report with interactive chart, filtering, and light/dark theme.</li>
+    </ul>
+
+    <h3>How to use</h3>
+    <ul>
+        <li>Right-click a test directory or file in the Project View.</li>
+        <li>Select <b>Tests Analyzer → Run and Analyze</b> to execute tests and view results.</li>
+        <li>Select <b>Tests Analyzer → Analyze from Existing Execution</b> to load previously saved results.</li>
+    </ul>
+
+    <h3>Supported build systems</h3>
+    <ul>
+        <li><b>Gradle</b> — automatic module and test task detection via RunConfiguration API and SMTestRunner.</li>
+        <li><b>Maven</b> — runs tests and parses Surefire/Failsafe XML reports.</li>
+    </ul>
+
+    <h3>Supported test frameworks</h3>
+    <ul>
+        <li>JUnit 5, Kotest, Spock 2.x, TestNG</li>
+    </ul>
+
+    <p>
+        <a href="https://github.com/straburzynski/tests-analyzer">GitHub</a> |
+        <a href="https://github.com/straburzynski/tests-analyzer/issues">Issue Tracker</a>
+    </p>
+    ]]></description>
+
+    <change-notes><![CDATA[
+    <b>0.1.0</b>
+    <ul>
+        <li>Initial release: run tests and show results with table and timeline chart.</li>
+    </ul>
+    ]]></change-notes>
+
+    <idea-version since-build="251"/>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+    <depends>org.jetbrains.plugins.gradle</depends>
+    <depends>org.jetbrains.idea.maven</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup id="Tests Analyzer" displayType="BALLOON"/>
+        <projectConfigurable
+                parentId="tools"
+                instance="com.github.straburzynski.testsanalyzer.settings.TestsAnalyzerConfigurable"
+                id="com.github.straburzynski.testsanalyzer.settings"
+                displayName="Tests Analyzer"
+                nonDefaultProject="true"/>
+    </extensions>
+
+    <actions>
+        <group id="TestsAnalyzer.Group"
+               text="Tests Analyzer"
+               popup="true">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+            <action id="TestsAnalyzer.RunTestsAndAnalyze"
+                    class="com.github.straburzynski.testsanalyzer.action.RunTestsAndAnalyzeAction"
+                    text="Run and Analyze"
+                    description="Run tests and display results with timing analysis"
+                    icon="/icons/runAndAnalyze.svg"/>
+            <action id="TestsAnalyzer.AnalyzeExisting"
+                    class="com.github.straburzynski.testsanalyzer.action.AnalyzeExistingAction"
+                    text="Analyze from Existing Execution"
+                    description="Read test results from the build folder without running tests"
+                    icon="/icons/analyzeChart.svg"/>
+        </group>
+    </actions>
+</idea-plugin>
