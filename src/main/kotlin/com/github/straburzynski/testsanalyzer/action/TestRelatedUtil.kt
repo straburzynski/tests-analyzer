@@ -4,10 +4,12 @@ import com.intellij.openapi.roots.ProjectFileIndex
 import com.intellij.openapi.roots.ProjectRootManager
 import com.intellij.openapi.vfs.VirtualFile
 
-private val TRUSTED_TEST_DIR_NAMES = setOf(
+val KNOWN_TEST_SOURCE_SETS = setOf(
     "test",
+    "it",
     "integration",
     "integrationTest",
+    "integration-test",
 )
 
 fun isTestRelated(file: VirtualFile, rootManager: ProjectRootManager): Boolean {
@@ -37,7 +39,7 @@ private fun isAncestorOfTestSource(
 private fun isInsideTrustedTestDir(file: VirtualFile): Boolean {
     var current: VirtualFile? = if (file.isDirectory) file else file.parent
     while (current != null) {
-        if (current.name in TRUSTED_TEST_DIR_NAMES) return true
+        if (current.name in KNOWN_TEST_SOURCE_SETS) return true
         // Stop walking above "src" to avoid false positives
         if (current.name == "src") break
         current = current.parent

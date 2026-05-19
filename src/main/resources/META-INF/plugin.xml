@@ -39,7 +39,11 @@
     ]]></description>
 
     <change-notes><![CDATA[
-    <b>0.1.0</b>
+    <b>0.0.2</b>
+    <ul>
+        <li>Fix: Gradle tests detection for multi-module projects and fallback for non-standard test directories.</li>
+    </ul>
+    <b>0.0.1</b>
     <ul>
         <li>Initial release: run tests and show results with table and timeline chart.</li>
     </ul>
